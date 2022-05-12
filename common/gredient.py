@@ -2,29 +2,33 @@ import numpy as np
 np.random.seed(0)
 import tensorflow as tf
 
-print(1)
-with tf.device('/gpu:0'):
-    x = tf.placeholder(tf.float32)
-    y = tf.placeholder(tf.float32)
-    z = tf.placeholder(tf.float32)
 
-    a = x * y
-    b = a + z
-    c = tf.reduce_sum(b)
-grad_x, grad_y, grad_z = tf.gradients(c, [x, y, z])
-print(grad_x, grad_y,  grad_z)
 
-# 실제 데이터 넣고 실행
-# 모든 데이터 돌릴거니 randn 필요한가?
-with tf.Session() as sess:
-    values = {
-        x: np.random.randn(N, D),
-        y: np.random.randn(N, D),
-        z: np.random.randn(N, D),
-    }
-    out = sess.run([c, grad_x, grad_y, grad_z], feed_dict=values)
-    c_val, grad_x_val, grad_y_val, grad_z_val = out
-    print(out)
+
+# 버전 안맞음
+#
+# with tf.device('/gpu:0'):
+#     x = tf.placeholder(tf.float32)
+#     y = tf.placeholder(tf.float32)
+#     z = tf.placeholder(tf.float32)
+#
+#     a = x * y
+#     b = a + z
+#     c = tf.reduce_sum(b)
+# grad_x, grad_y, grad_z = tf.gradients(c, [x, y, z])
+# print(grad_x, grad_y,  grad_z)
+#
+# # 실제 데이터 넣고 실행
+# # 모든 데이터 돌릴거니 randn 필요한가?
+# with tf.Session() as sess:
+#     values = {
+#         x: np.random.randn(N, D),
+#         y: np.random.randn(N, D),
+#         z: np.random.randn(N, D),
+#     }
+#     out = sess.run([c, grad_x, grad_y, grad_z], feed_dict=values)
+#     c_val, grad_x_val, grad_y_val, grad_z_val = out
+#     print(out)
 
 
 # 텐서플로우 쓰면 필요없나?
