@@ -84,8 +84,8 @@ def get_single_column(file, sheetname, firstcell, lastcell):
 
 # 테스트용
 if __name__ == '__main__':
-    file = load_xls('./data/temperatures.xlsx')
-    print(get_cell_data(file,'기온','A2'))
-    print(get_singleline_data(file,'기온','A2','D2'))
-    print(get_single_column(file,'기온','B2','B14'))
+    file = load_xls('./data/maple.xlsx')
+    print(get_cell_data(file,'Sheet1','B2'))
+    # print(get_singleline_data(file,'sheet1','B2','D2'))
+    print(get_single_column(file,'Sheet1','B2','B14'))
 
