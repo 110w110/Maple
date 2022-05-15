@@ -82,10 +82,43 @@ def get_single_column(file, sheetname, firstcell, lastcell):
         cell = cell[:1]+str(int(cell[1:])+1)
     return data
 
+def all_data_fetch(file, sheetnamelist, firstcelllist, lastcelllist, yearly_or_monthly):
+    data = []
+    # input_info = [('기온','B2'),('기온','C2'),('강수량','B2')]
+    year_num = 33
+
+    for y in range(year_num):
+        count = 0
+        for i in range(len(sheetnamelist)):
+            sheetname = sheetnamelist[i]
+            firstcell = firstcelllist[i]
+            lastcell = lastcelllist[i]
+            fcell = firstcell
+            lcell = lastcell
+
+
+
+
+
+
+        # while get_cell_data(file, sheetname, fcell) != None and get_cell_data(file, sheetname, fcell) != '_':
+        #     # print(fcell, lcell)
+        #     data.append(get_singleline_data(file, sheetname, fcell, lcell))
+        #     if 65 <= ord(fcell[1]) <= 90:
+        #         fcell = fcell[:2] + str(int(fcell[2:]) + 1)
+        #         lcell = lcell[:2] + str(int(lcell[2:]) + 1)
+        #     else:
+        #         fcell = fcell[:1] + str(int(fcell[1:]) + 1)
+        #         lcell = lcell[:1] + str(int(lcell[1:]) + 1)
+        #     # print(fcell + ' ' + lcell)
+
+    return data
+
 # 테스트용
 if __name__ == '__main__':
     file = load_xls('./data/maple.xlsx')
-    print(get_cell_data(file,'Sheet1','B2'))
+    print(get_cell_data(file,'단풍시기','B2'))
     # print(get_singleline_data(file,'sheet1','B2','D2'))
-    print(get_single_column(file,'Sheet1','B2','B14'))
+    print(get_single_column(file,'단풍시기','B2','B14'))
+    print(get_single_column(file,'기온','C2','C14'))
 
