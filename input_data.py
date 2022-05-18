@@ -117,8 +117,16 @@ def all_data_fetch(file, sheetnamelist, firstcelllist, lastcelllist, yearly_or_m
 # 테스트용
 if __name__ == '__main__':
     file = load_xls('./data/maple.xlsx')
-    print(get_cell_data(file,'단풍시기','B2'))
-    # print(get_singleline_data(file,'sheet1','B2','D2'))
-    print(get_single_column(file,'단풍시기','B2','B14'))
-    print(get_single_column(file,'기온','C2','C14'))
-
+    start_date = get_single_column(file, '단풍시기', 'B2', 'B35')
+    for i in range(len(start_date)):
+        start_date[i] = int(start_date[i].strftime("%Y%m%d"))
+    min_temper = get_single_column(file,'기온','D14','D408')
+    max_temper = get_single_column(file,'기온','E14','E408')
+    # rain_weight = get_single_column(file, '강수량', 'C2', 'C408')
+    # rain_time = get_single_column(file, '장마', 'C2', 'C35')
+    for i in range(393,-1,-1):
+        if 0 <= i%12 < 5 or 10 <= i%12:
+            del(min_temper[i])
+            del(max_temper[i])
+            # del(rain_weight[i])
+    print(len(start_date), len(max_temper)//5, len(max_temper)//5)
