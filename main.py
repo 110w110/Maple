@@ -26,21 +26,16 @@ for i in range(393, -1, -1):
 np.array(min_temper[i]).astype(float)
 np.array(max_temper[i]).astype(float)
 x = []
-for i in range(32):
+for i in range(33):
     v = []
     for j in range(5):
         v.append(min_temper[i*5+j])
     for j in range(5):
         v.append(max_temper[i*5+j])
     x.append(v)
-# ti = []
-# to = np.array([start_date.pop()])
-# for i in range(5):
-#     ti.append(min_temper[32*5+i])
-#     ti.append(max_temper[32*5+i])
-# ti = np.array([ti])
-x = np.array([x])
-y = np.array([start_date])
+
+x = np.array(x)
+y = np.array(start_date,)
 
 model = models.Sequential()
 # model.add(layers.Dense(10, input_shape=(1,)))
@@ -48,9 +43,9 @@ model = models.Sequential()
 
 # model.add(layers.Dense(1, input_dim=1))
 
-# model.add(layers.Dense(units=1, input_dim=1*10, activation='relu'))
-# model.add(layers.Dense(units=1, activation='relu'))
-# model.add(layers.Dense(units=1, activation='sigmoid'))
+model.add(layers.Dense(units=33, activation='relu'))
+model.add(layers.Dense(units=99, activation='relu'))
+model.add(layers.Dense(units=33, activation='sigmoid'))
 
 
 model.compile("SGD", "mse")
@@ -58,9 +53,9 @@ model.fit(x,y, epochs=1000)
 # for i in range(33):
 #     model.fit(x[i*10:i*10+10], y[i], epochs=1000, verbose=1)
 
-# predict = model.predict(ti)
+# predict = model.predict(x[0][32])
 # print("predict",*predict)
-# print("real",to)
+# print("real",y[32])
 
 
 # print(hist.history['loss'])
