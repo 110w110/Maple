@@ -97,8 +97,11 @@ def get_many_column(file, sheetname, firstcell, lastcell, n):
             print(chr(ord(cell[:1]) + _) + cell[1:])
             tmp.append(get_cell_data(file,sheetname, chr(ord(cell[:1]) + _) + cell[1:]))
         print(tmp)
-        print(tmp[0].month, type(tmp[0]))
-        if tmp[0].month >= 6 and tmp[0].month <= 10 :
+        print( type(tmp[0]))
+        if str(type(tmp[0]))!="<class 'int'>":
+            if tmp[0].month >= 6 and tmp[0].month <= 10:
+                data.append(tmp)
+        else:
             data.append(tmp)
         cell = cell[:1]+str(int(cell[1:])+1)
     return data
@@ -137,7 +140,7 @@ def all_data_fetch(file, sheetnamelist, firstcelllist, lastcelllist, yearly_or_m
 
 # 테스트용
 if __name__ == '__main__':
-    file = load_xls('./data/maple.xlsx')
+    file = load_xls('data/maple.xlsx')
     # start_date = get_single_column(file, '단풍시기', 'B2', 'B35')
     # for i in range(len(start_date)):
     #     start_date[i] = int(start_date[i].strftime("%Y%m%d"))
@@ -151,5 +154,7 @@ if __name__ == '__main__':
     #         del(max_temper[i])
     #         # del(rain_weight[i])
     # print(len(start_date), len(max_temper)//5, len(max_temper)//5)
-    print(get_many_column(file,'기온','A2','A30',3))
-    # print(get_many_column(file,'장마','A2','A30',3))
+    # print(get_many_column(file,'기온','A2','A30',3))
+    print(get_many_column(file,'sheet2','A2','A30',5))
+    print(get_many_column(file,'sheet3','A2','A30',3))
+    print(get_many_column(file,'sheet4','A2','A30',5))
