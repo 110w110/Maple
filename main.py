@@ -13,16 +13,17 @@ import numpy as np
 file = load_xls('./data/maple.xlsx')
 start_date = get_single_column(file, '단풍시기', 'B2', 'B35')
 for i in range(len(start_date)):
-    start_date[i] = float(start_date[i].strftime("%Y%m%d"))
+    start_date[i] = (int(start_date[i].strftime("%Y%m%d")[4:6])-10)*31 + int(start_date[i].strftime("%Y%m%d")[6:])
+    # start_date[i] = float(start_date[i].strftime("%Y%m%d")[6:])
 min_temper = get_single_column(file, '기온', 'D14', 'D408')
 max_temper = get_single_column(file, '기온', 'E14', 'E408')
-# rain_weight = get_single_column(file, '강수량', 'C2', 'C408')
-# rain_time = get_single_column(file, '장마', 'C2', 'C35')
+rain_weight = get_single_column(file, 'rainw', 'C2', 'C408')
+rain_time = get_single_column(file, 'rainm', 'C2', 'C35')
 for i in range(393, -1, -1):
     if 0 <= i % 12 < 5 or 10 <= i % 12:
         del (min_temper[i])
         del (max_temper[i])
-        # del(rain_weight[i])
+        del (rain_weight[i])
 np.array(min_temper[i]).astype(float)
 np.array(max_temper[i]).astype(float)
 x = []
@@ -32,24 +33,42 @@ for i in range(33):
         v.append(min_temper[i*5+j])
     for j in range(5):
         v.append(max_temper[i*5+j])
+    for j in range(5):
+        v.append(rain_weight[i*5+j])
     x.append(v)
 
 x = np.array(x)
-y = np.array(start_date,)
+y = np.array(start_date)
+# x = np.array([1,2,3,4,5])
+# y = np.array([2,4,6,8,10])
 
 model = models.Sequential()
 # model.add(layers.Dense(10, input_shape=(1,)))
 # model.add(layers.Dense(1))
 
 # model.add(layers.Dense(1, input_dim=1))
+#
+model.add(layers.Dense(33, activation='relu'))
+# model.add(layers.Dense(3, activation='relu'))
+model.add(layers.Dense(2, activation='softmax'))
+# model.add(layers.Dense(units=33,activation='relu'))
+# model.add(layers.Dense(units=33,activation='relu'))
+# model.add(layers.Dense(units=33,activation='sigmoid'))
+# sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 
-model.add(layers.Dense(units=33, activation='relu'))
-model.add(layers.Dense(units=99, activation='relu'))
-model.add(layers.Dense(units=33, activation='sigmoid'))
-
-
-model.compile("SGD", "mse")
+model.compile("sgd", "mse")
+# model.compile(loss='mean_squared_error', optimizer='sgd')
+# model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 model.fit(x,y, epochs=1000)
+
+# model.add(layers.Dense(units=5,kernel_initializer='normal',activation='sigmoid'))
+#
+#
+# model.compile(loss='categorical_crossentropy',
+#               optimizer='sgd',
+#               metrics=['accuracy'])
+# model.fit(x,y, epochs=5)
+
 # for i in range(33):
 #     model.fit(x[i*10:i*10+10], y[i], epochs=1000, verbose=1)
 

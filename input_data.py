@@ -82,6 +82,30 @@ def get_single_column(file, sheetname, firstcell, lastcell):
         cell = cell[:1]+str(int(cell[1:])+1)
     return data
 
+def get_many_column(file, sheetname, firstcell, lastcell, n):
+    cell = firstcell
+    data = []
+
+    if firstcell[:1] != lastcell[:1]:
+        print("error")
+        return data
+
+    while cell != lastcell:
+        # tmp = get_singleline_data(file, sheetname, cell, cell[:1]+str(int(cell[1:])+n+1))
+        tmp = []
+        for _ in range(n):
+            print(chr(ord(cell[:1]) + _) + cell[1:])
+            tmp.append(get_cell_data(file,sheetname, chr(ord(cell[:1]) + _) + cell[1:]))
+        print(tmp)
+        print( type(tmp[0]))
+        if str(type(tmp[0]))!="<class 'int'>":
+            if tmp[0].month >= 6 and tmp[0].month <= 10:
+                data.append(tmp)
+        else:
+            data.append(tmp)
+        cell = cell[:1]+str(int(cell[1:])+1)
+    return data
+
 def all_data_fetch(file, sheetnamelist, firstcelllist, lastcelllist, yearly_or_monthly):
     data = []
     # input_info = [('기온','B2'),('기온','C2'),('강수량','B2')]
@@ -116,17 +140,21 @@ def all_data_fetch(file, sheetnamelist, firstcelllist, lastcelllist, yearly_or_m
 
 # 테스트용
 if __name__ == '__main__':
-    file = load_xls('./data/maple.xlsx')
-    start_date = get_single_column(file, '단풍시기', 'B2', 'B35')
-    for i in range(len(start_date)):
-        start_date[i] = int(start_date[i].strftime("%Y%m%d"))
-    min_temper = get_single_column(file,'기온','D14','D408')
-    max_temper = get_single_column(file,'기온','E14','E408')
-    # rain_weight = get_single_column(file, '강수량', 'C2', 'C408')
-    # rain_time = get_single_column(file, '장마', 'C2', 'C35')
-    for i in range(393,-1,-1):
-        if 0 <= i%12 < 5 or 10 <= i%12:
-            del(min_temper[i])
-            del(max_temper[i])
-            # del(rain_weight[i])
-    print(len(start_date), len(max_temper)//5, len(max_temper)//5)
+    file = load_xls('data/maple.xlsx')
+    # start_date = get_single_column(file, '단풍시기', 'B2', 'B35')
+    # for i in range(len(start_date)):
+    #     start_date[i] = int(start_date[i].strftime("%Y%m%d"))
+    # min_temper = get_single_column(file,'기온','D14','D408')
+    # max_temper = get_single_column(file,'기온','E14','E408')
+    # # rain_weight = get_single_column(file, '강수량', 'C2', 'C408')
+    # # rain_time = get_single_column(file, '장마', 'C2', 'C35')
+    # for i in range(393,-1,-1):
+    #     if 0 <= i%12 < 5 or 10 <= i%12:
+    #         del(min_temper[i])
+    #         del(max_temper[i])
+    #         # del(rain_weight[i])
+    # print(len(start_date), len(max_temper)//5, len(max_temper)//5)
+    # print(get_many_column(file,'기온','A2','A30',3))
+    print(get_many_column(file,'sheet2','A2','A30',5))
+    print(get_many_column(file,'sheet3','A2','A30',3))
+    print(get_many_column(file,'sheet4','A2','A30',5))
