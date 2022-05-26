@@ -78,17 +78,17 @@ model.add(Activation('relu'))
 #sgd = optimizers.SGD(lr=0.01,decay=1e-7)
 sgd = optimizers.SGD(lr=0.01)
 
-#TODO: 일반 사용
+#  TODO: 일반 사용
 #model.compile(optimizer='adam',loss='mse',metrics=['accuracy'])
 
-#TODO: sgd 직접 설정
+# TODO: sgd 직접 설정
 model.compile(optimizer=sgd,loss='mse',metrics=['accuracy'])
 
 # model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 # model.compile(loss='mean_squared_error', optimizer='sgd')
 
 # TODO: validation split / Test 에서 val 구하면 안돼
-model.fit(x_train, y_train, validation_split=0.01, epochs=1000)
+model.fit(x_train, y_train, validation_split=0.1, epochs=1000)
 # model.fit(x_train, y_train, epochs=1000)
 print(model.summary())
 
