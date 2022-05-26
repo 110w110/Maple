@@ -1,4 +1,5 @@
 import time
+
 import keras.initializers
 from tensorflow.keras import models
 from tensorflow.keras import layers
@@ -15,13 +16,16 @@ keras.initializers.he_normal(seed=None)
 # y = x * 2 + 1
 file = load_xls('./data/maple.xlsx')
 start_date = get_single_column(file, 'sheet1', 'B2', 'B35')
+forsythia_flowering = get_single_column(file, 'sheet6', 'D2', 'D35')
 for i in range(len(start_date)):
     # TODO:날짜 파싱
     start_date[i] = (int(start_date[i].strftime("%Y%m%d")[4:6])-10)*31 + int(start_date[i].strftime("%Y%m%d")[6:])
 
+    forsythia_flowering[i] = (int(forsythia_flowering[i].strftime("%Y%m%d")[4:6])-10)*31 + int(forsythia_flowering[i].strftime("%Y%m%d")[6:])
+    # start_date[i] = float(start_date[i].strftime("%Y%m%d")[6:])
 min_temper = get_single_column(file, 'sheet2', 'D14', 'D408')
 max_temper = get_single_column(file, 'sheet2', 'E14', 'E408')
-# rain_weight = get_single_column(file, 'sheet3', 'C2', 'C408')
+rain_weight = get_single_column(file, 'sheet3', 'B2', 'B35')
 # rain_time = get_single_column(file, 'sheet3', 'C2', 'C35')
 for i in range(393, -1, -1):
     if 0 <= i % 12 < 5 or 10 <= i % 12:
@@ -37,8 +41,8 @@ for i in range(33):
         v.append(min_temper[i*5+j])
     for j in range(5):
         v.append(max_temper[i*5+j])
-    # for j in range(5):
-    #     v.append(rain_weight[i*5+j])
+    v.append(rain_weight[i])
+    v.append(forsythia_flowering[i])
     x.append(v)
 
 x = np.array(x)
