@@ -20,7 +20,6 @@ forsythia_flowering = get_single_column(file, 'sheet6', 'D2', 'D35')
 for i in range(len(start_date)):
     # TODO:날짜 파싱
     start_date[i] = (int(start_date[i].strftime("%Y%m%d")[4:6])-10)*31 + int(start_date[i].strftime("%Y%m%d")[6:])
-
     forsythia_flowering[i] = (int(forsythia_flowering[i].strftime("%Y%m%d")[4:6])-10)*31 + int(forsythia_flowering[i].strftime("%Y%m%d")[6:])
     # start_date[i] = float(start_date[i].strftime("%Y%m%d")[6:])
 min_temper = get_single_column(file, 'sheet2', 'D14', 'D408')
@@ -51,7 +50,7 @@ y = np.array(start_date)
 # x = x / x.max()
 # y = y / y.max()
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, shuffle=False, random_state=1004)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=False, random_state=1004)
 print('x : ',x_test)
 print('y : ',y_test)
 
@@ -70,7 +69,7 @@ model = Sequential()
 #model.add(Dense(units=3,activation='softmax'))
 
 # TODO: batch_normalization
-model.add(Dense(5, kernel_initializer='he_normal'))
+model.add(Dense(32, kernel_initializer='he_normal'))
 # model.add(layers.Dense(3))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
@@ -89,7 +88,8 @@ model.compile(optimizer=sgd,loss='mse',metrics=['accuracy'])
 # model.compile(loss='mean_squared_error', optimizer='sgd')
 
 # TODO: validation split / Test 에서 val 구하면 안돼
-model.fit(x_train, y_train, validation_split=0.1, epochs=1000)
+model.fit(x_train, y_train, validation_split=0.01, epochs=1000)
+# model.fit(x_train, y_train, epochs=1000)
 print(model.summary())
 
 test_loss, test_acc = model.evaluate(x_test, y_test)
