@@ -9,7 +9,7 @@ from tensorflow.keras import optimizers
 from input_data import *
 import numpy as np
 from sklearn.model_selection import train_test_split
-
+from knn import Knn
 
 keras.initializers.he_normal(seed=None)
 # x = np.array([0,1,2,3,4])
@@ -50,9 +50,16 @@ y = np.array(start_date)
 # x = x / x.max()
 # y = y / y.max()
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=False, random_state=1004)
-print('x : ',x_test)
-print('y : ',y_test)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=True)
+# x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=True, random_state=1004)
+# print('x_test : ', x_test)
+# print('y_test : ', y_test)
+# print('x_train : ', x_train)
+# print('y_train : ', y_train)
+
+train_size = len(y_train)
+test_size = len(y_test)
+print(train_size, test_size)
 
 # # TODO: 정규화
 # mean = x_train.mean(axis=0)
@@ -62,6 +69,24 @@ print('y : ',y_test)
 #
 # x_test -= mean
 # x_test /= std
+
+k1 = Knn(x_train, x_test, y_train, y_test)
+k = 3
+acc = 0
+for i in range(test_size):
+
+    print(i, "th data result ", end=' ')
+
+    result = k1.neighbor(k, k1.distance(i))
+
+    print(result, "  label ", end=' ')
+    print(y_test[i])
+    #if result == y_test[i]:
+    #    count = count + 1
+
+    acc += abs(result - y_test[i])
+print("\nAccuracy: %.4f" % acc)
+time.sleep(10000)
 
 model = Sequential()
 
