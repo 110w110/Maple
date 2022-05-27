@@ -1,5 +1,9 @@
 import numpy as np
-
+# TODO
+#   0. 데이터 늘리기
+#   1. 정규화
+#   2. 강수량 나누기
+#   3. 가중치
 
 class Knn:
     def __init__(self, x_train, x_test, y_train, y_test):

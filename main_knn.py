@@ -1,8 +1,13 @@
-
 from input_data import *
 import numpy as np
 from sklearn.model_selection import train_test_split
 from knn import Knn
+
+def normalize(arr):
+    normalized = []
+    for x in arr:
+        normalized.append((x-min(arr)) / (max(arr)-min(arr)))
+    return normalized
 # x = np.array([0,1,2,3,4])
 # y = x * 2 + 1
 file = load_xls('./data/maple.xlsx')
@@ -23,9 +28,16 @@ for i in range(393, -1, -1):
         del (min_temper[i])
         del (max_temper[i])
         # del (rain_weight[i])
-np.array(min_temper[i]).astype(float)
-np.array(max_temper[i]).astype(float)
-np.array(sun_summer[i]).astype(float)
+# TODO
+#   세로로 해야함;
+min_temper = normalize(min_temper)
+max_temper = normalize(max_temper)
+sun_summer = normalize(sun_summer)
+forsythia_flowering = normalize(forsythia_flowering)
+
+# np.array(min_temper[i]).astype(float)
+# np.array(max_temper[i]).astype(float)
+# np.array(sun_summer[i]).astype(float)
 x = []
 for i in range(33):
     v = []
@@ -37,10 +49,9 @@ for i in range(33):
     v.append(forsythia_flowering[i])
     v.append(sun_summer[i])
     x.append(v)
-
+    print(v)
 x = np.array(x)
 y = np.array(start_date)
-
 # x = x / x.max()
 # y = y / y.max()
 
