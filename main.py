@@ -20,27 +20,31 @@ forsythia_flowering = get_single_column(file, 'sheet6', 'D2', 'D35')
 for i in range(len(start_date)):
     # TODO:날짜 파싱
     start_date[i] = (int(start_date[i].strftime("%Y%m%d")[4:6])-10)*31 + int(start_date[i].strftime("%Y%m%d")[6:])
-    forsythia_flowering[i] = (int(forsythia_flowering[i].strftime("%Y%m%d")[4:6])-10)*31 + int(forsythia_flowering[i].strftime("%Y%m%d")[6:])
+    forsythia_flowering[i] = (int(forsythia_flowering[i].strftime("%Y%m%d")[4:6])-3)*31 + int(forsythia_flowering[i].strftime("%Y%m%d")[6:])
     # start_date[i] = float(start_date[i].strftime("%Y%m%d")[6:])
 min_temper = get_single_column(file, 'sheet2', 'D14', 'D408')
 max_temper = get_single_column(file, 'sheet2', 'E14', 'E408')
-rain_weight = get_single_column(file, 'sheet3', 'B2', 'B35')
+#rain_weight = get_single_column(file, 'sheet3', 'B2', 'B35')
+rain_weight = get_single_column(file, 'sheet4', 'C2', 'C409')
 # rain_time = get_single_column(file, 'sheet3', 'C2', 'C35')
 for i in range(393, -1, -1):
-    if 0 <= i % 12 < 5 or 10 <= i % 12:
+    if 0 <= i % 12 < 7 or 9 <= i % 12:
         del (min_temper[i])
         del (max_temper[i])
+        del (rain_weight[i])
         # del (rain_weight[i])
 np.array(min_temper[i]).astype(float)
 np.array(max_temper[i]).astype(float)
+np.array(rain_weight[i]).astype(float)
 x = []
 for i in range(33):
     v = []
-    for j in range(5):
-        v.append(min_temper[i*5+j])
-    for j in range(5):
-        v.append(max_temper[i*5+j])
-    v.append(rain_weight[i])
+    for j in range(2):
+        v.append(min_temper[i*2+j])
+    for j in range(2):
+        v.append(max_temper[i*2+j])
+    for j in range(2):
+        v.append(rain_weight[i*2+j])
     v.append(forsythia_flowering[i])
     x.append(v)
 
@@ -90,18 +94,18 @@ time.sleep(10000)
 
 model = Sequential()
 
-# TODO: hidden layer 추가?
-#model.add(Dense(units=3,activation='softmax'))
-
 # TODO: batch_normalization
-model.add(Dense(32, kernel_initializer='he_normal'))
+model.add(Dense(21, kernel_initializer='he_normal'))
 # model.add(layers.Dense(3))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
+# TODO: hidden layer 추가?
+#model.add(Dense(units=15,activation='softmax'))
+
 #sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-#sgd = optimizers.SGD(lr=0.01,decay=1e-7)
-sgd = optimizers.SGD(lr=0.01)
+sgd = optimizers.SGD(lr=0.01,decay=1e-7)
+#sgd = optimizers.SGD(lr=0.01)
 
 #  TODO: 일반 사용
 #model.compile(optimizer='adam',loss='mse',metrics=['accuracy'])
