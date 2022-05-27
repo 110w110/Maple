@@ -52,19 +52,25 @@ def get_singleline_data(file, sheetname, firstcell, lastcell):
     cell = firstcell
     data = []
 
-    if firstcell[1:] != lastcell[1:]:
-        if 65 <= ord(firstcell[1]) <= 90:
-            if firstcell[2:] != lastcell[2:]:
-                print("error")
-                return data
-        else:
-            print("error")
-            return data
+    # if firstcell[1:] != lastcell[1:]:
+    #     if 65 <= ord(firstcell[1]) <= 90:
+    #         if firstcell[2:] != lastcell[2:]:
+    #             print("error")
+    #             return data
+    #     else:
+    #         print("error")
+    #         return data
 
     while cell != lastcell:
         data.append(get_cell_data(file,sheetname,cell))
+        # if 65 <= ord(cell[1]) <= 90:
+        #     cell = cell[0] + chr(ord(cell[1])+1) + cell[2:]
+        # else:
+        #     cell = chr(ord(cell[:1])+1) + cell[1:]
         if 65 <= ord(cell[1]) <= 90:
             cell = cell[0] + chr(ord(cell[1])+1) + cell[2:]
+        elif cell[0]=='Z':
+            cell = 'AA' + cell[1:]
         else:
             cell = chr(ord(cell[:1])+1) + cell[1:]
     return data
