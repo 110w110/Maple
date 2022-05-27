@@ -32,24 +32,29 @@ class Knn:
         indexarr = np.argsort(dis)
         # print(indexarr)
         # 0.0으로 초기화된 원소 60개짜리 배열
-        numList = [0.0] * 60
+        # numList = [0.0] * 60
 
         # k_list = []
+        # total = 0.0
         total = 0.0
-        total2 = 0.0
 
-        for i in indexarr[0:k]:
-            numList[self.y_train[i]] = numList[self.y_train[i]] + 1/dis[i]
-            total += 1/dis[i]
-
-        # print(numList)
-
-        for i in indexarr[0:k]:
+        # for i in indexarr[0:k]:
+        for i in range(k):
+            total += (k-i) * self.y_train[indexarr[i]]
+            print(self.y_train[indexarr[i]],end=' ')
+            # print(total)
+            # numList[self.y_train[i]] += 1/dis[i]
+            # total += 1/dis[i]
+            # numList[self.y_train[i]] = k-i
+        print()
+        # for i in indexarr[0:k]:
             # print((1/dis[i]) / total, ' * ', self.y_train[i])
-            total2 += (1/dis[i]) / total * self.y_train[i]
+            # total2 += (1/dis[i]) / total * self.y_train[i]
 
-        index = numList.index(max(numList))
-        return int(total2)
+        # index = numList.index(max(numList))
+        # print(index, numList[index], numList)
+        # print(total/(k*(k+1)/2))
+        return round(total/(k*(k+1)/2))
 
     """
 
