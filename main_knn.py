@@ -1,12 +1,20 @@
 from input_data import *
 import numpy as np
+import sys
 from sklearn.model_selection import train_test_split
 from knn import Knn
 
 def normalize(arr):
-    normalized = []
-    for x in arr:
-        normalized.append((x-min(arr)) / (max(arr)-min(arr)))
+    normalized = [[] for _ in range(len(arr))]
+    for x in range(len(arr[0])):
+        mx = -sys.maxsize
+        mn = sys.maxsize
+        for y in range(len(arr)):
+            mx = max(mx, arr[y][x])
+            mn = min(mn, arr[y][x])
+        for y in range(len(arr)):
+            normalized[y].append((arr[y][x] - mn) / (mx-mn))
+    # print(*normalized,sep='\n')
     return normalized
 # x = np.array([0,1,2,3,4])
 # y = x * 2 + 1
@@ -30,10 +38,10 @@ for i in range(393, -1, -1):
         # del (rain_weight[i])
 # TODO
 #   세로로 해야함;
-min_temper = normalize(min_temper)
-max_temper = normalize(max_temper)
-sun_summer = normalize(sun_summer)
-forsythia_flowering = normalize(forsythia_flowering)
+# min_temper = normalize(min_temper)
+# max_temper = normalize(max_temper)
+# sun_summer = normalize(sun_summer)
+# forsythia_flowering = normalize(forsythia_flowering)
 
 # np.array(min_temper[i]).astype(float)
 # np.array(max_temper[i]).astype(float)
@@ -49,8 +57,8 @@ for i in range(33):
     v.append(forsythia_flowering[i])
     v.append(sun_summer[i])
     x.append(v)
-    print(v)
-x = np.array(x)
+# print(*x,sep='\n')
+x = np.array(normalize(x))
 y = np.array(start_date)
 # x = x / x.max()
 # y = y / y.max()
@@ -64,12 +72,10 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.17, shuffl
 
 train_size = len(y_train)
 test_size = len(y_test)
-print(train_size, test_size)
 
 k1 = Knn(x_train, x_test, y_train, y_test)
 k = 2
 acc = 0
-print(y)
 for i in range(test_size):
     result = k1.neighbor(k, k1.distance(i))
     print(i, "th data result ", result, ", label ", y_test[i], sep='', end=' ')
