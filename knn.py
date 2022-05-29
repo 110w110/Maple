@@ -45,12 +45,12 @@ class Knn:
         # for i in indexarr[0:k]:
         for i in range(k):
             total += (k-i) * self.y_train[indexarr[i]]
-            print(self.y_train[indexarr[i]],end=' ')
+            # print(self.y_train[indexarr[i]],end=' ')
             # print(total)
             # numList[self.y_train[i]] += 1/dis[i]
             # total += 1/dis[i]
             # numList[self.y_train[i]] = k-i
-        print()
+        # print()
         # for i in indexarr[0:k]:
             # print((1/dis[i]) / total, ' * ', self.y_train[i])
             # total2 += (1/dis[i]) / total * self.y_train[i]

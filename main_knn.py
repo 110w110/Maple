@@ -73,6 +73,7 @@ y = np.array(start_date)
 # print(len(x))
 # x = x / x.max()
 # y = y / y.max()
+print(start_date)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.17, shuffle=True)
 # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=True, random_state=1004)
@@ -85,7 +86,7 @@ train_size = len(y_train)
 test_size = len(y_test)
 
 k1 = Knn(x_train, x_test, y_train, y_test)
-k = 2
+k = 5
 acc = 0
 for i in range(test_size):
     result = k1.neighbor(k, k1.distance(i))
