@@ -61,7 +61,6 @@ for i in range(97):
 
 x = np.array(normalize(x))
 y = np.array(start_date)
-print(start_date)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.17, shuffle=True)
 
@@ -81,7 +80,3 @@ for i in range(test_size):
     sum_of_result += abs(result - y_test[i])
 print("="*35)
 print("Average : %.2f days" % (sum_of_result/test_size))
-    # acc += 1 - abs(result - y_test[i])/result
-    # print(", Accuracy : %.2f" % ((1-abs(result-y_test[i])/result)*100), "%", sep='')
-
-# print("\nTotal Accuracy : %.4f" % (acc/test_size*100), "%", sep='')
