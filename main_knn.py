@@ -19,23 +19,31 @@ def normalize(arr):
 # x = np.array([0,1,2,3,4])
 # y = x * 2 + 1
 file = load_xls('./data/maple.xlsx')
-start_date = get_single_column(file, 'sheet1', 'B2', 'B35')
-forsythia_flowering = get_single_column(file, 'sheet6', 'D2', 'D35')
+start_date = get_single_column(file, 'sheet1', 'B2', 'B99')
+# print(len(start_date)) 97
+forsythia_flowering = get_single_column(file, 'sheet6', 'D2', 'D99')
+# print(len(forsythia_flowering)) # 97
 for i in range(len(start_date)):
     # TODO:날짜 파싱
     start_date[i] = (int(start_date[i].strftime("%Y%m%d")[4:6])-10)*31 + int(start_date[i].strftime("%Y%m%d")[6:])
     forsythia_flowering[i] = (int(forsythia_flowering[i].strftime("%Y%m%d")[4:6])-3)*31 + int(forsythia_flowering[i].strftime("%Y%m%d")[6:])
     # start_date[i] = float(start_date[i].strftime("%Y%m%d")[6:])
-min_temper = get_single_column(file, 'sheet2', 'D14', 'D408')
-max_temper = get_single_column(file, 'sheet2', 'E14', 'E408')
-rain_weight = get_single_column(file, 'sheet3', 'B2', 'B35')
-sun_summer = get_singleline_data(file, 'sheet7', 'B6', 'AI6')
+
+# print(len(start_date)) 97
+min_temper = get_single_column(file, 'sheet2', 'D14', 'D919')
+max_temper = get_single_column(file, 'sheet2', 'E14', 'E919')
+# print(len(min_temper)) 905
+rain_weight = get_single_column(file, 'sheet3', 'B2', 'B99')
+sun_summer = get_singleline_data(file, 'sheet7', 'B6', 'CU6')
+sun_fall = get_singleline_data(file, 'sheet7', 'B7', 'CU7')
+print(len(sun_fall))
 # rain_time = get_single_column(file, 'sheet3', 'C2', 'C35')
 for i in range(393, -1, -1):
     if 0 <= i % 12 < 5 or 10 <= i % 12:
         del (min_temper[i])
         del (max_temper[i])
         # del (rain_weight[i])
+# print(len(min_temper)) 676
 # TODO
 #   세로로 해야함;
 # min_temper = normalize(min_temper)
@@ -47,19 +55,22 @@ for i in range(393, -1, -1):
 # np.array(max_temper[i]).astype(float)
 # np.array(sun_summer[i]).astype(float)
 x = []
-for i in range(33):
+for i in range(97):
     v = []
-    for j in range(5):
-        v.append(min_temper[i*5+j])
-    for j in range(5):
-        v.append(max_temper[i*5+j])
+    # for j in range(5):
+    #     v.append(min_temper[i*5+j])
+    # for j in range(5):
+    #     v.append(max_temper[i*5+j])
     v.append(rain_weight[i])
     v.append(forsythia_flowering[i])
     v.append(sun_summer[i])
+    v.append(sun_fall[i])
     x.append(v)
 # print(*x,sep='\n')
-x = np.array(normalize(x))
+x = np.array(x)
 y = np.array(start_date)
+print(x)
+print(len(x))
 # x = x / x.max()
 # y = y / y.max()
 
