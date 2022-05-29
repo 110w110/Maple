@@ -22,6 +22,9 @@ def itd(num):
     if num > 31:
         month += 1
         num -= 31
+    elif num < 0 :
+        month -= 1
+        num += 31
     return str(month)+"/"+str(num)
 
 file = load_xls('./data/maple.xlsx')
@@ -69,12 +72,15 @@ k1 = Knn(x_train, x_test, y_train, y_test)
 k = 3
 acc = 0
 
+sum_of_result = 0
 print("Data\tPrediction\tReal\tDifference")
 for i in range(test_size):
     result = k1.neighbor(k, k1.distance(i))
     print(i + 1, "th \t", itd(result), "    \t", itd(y_test[i]), sep='', end='')
     print(" \t", abs(result - y_test[i]), " day", sep='')
-
+    sum_of_result += abs(result - y_test[i])
+print("="*35)
+print("Average : %.2f days" % (sum_of_result/test_size))
     # acc += 1 - abs(result - y_test[i])/result
     # print(", Accuracy : %.2f" % ((1-abs(result-y_test[i])/result)*100), "%", sep='')
 
