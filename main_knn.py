@@ -62,7 +62,7 @@ for i in range(97):
 x = np.array(normalize(x))
 y = np.array(start_date)
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.17, shuffle=True)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=True)
 
 train_size = len(y_train)
 test_size = len(y_test)
