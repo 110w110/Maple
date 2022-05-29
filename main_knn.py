@@ -1,31 +1,9 @@
 from input_data import *
 import numpy as np
-import sys
 from sklearn.model_selection import train_test_split
 from knn import Knn
+import func as fc
 
-def normalize(arr):
-    normalized = [[] for _ in range(len(arr))]
-    for x in range(len(arr[0])):
-        mx = -sys.maxsize
-        mn = sys.maxsize
-        for y in range(len(arr)):
-            mx = max(mx, arr[y][x])
-            mn = min(mn, arr[y][x])
-        for y in range(len(arr)):
-            normalized[y].append((arr[y][x] - mn) / (mx-mn))
-
-    return normalized
-
-def itd(num):
-    month = 10
-    if num > 31:
-        month += 1
-        num -= 31
-    elif num < 0 :
-        month -= 1
-        num += 31
-    return str(month)+"/"+str(num)
 
 file = load_xls('./data/maple.xlsx')
 start_date = get_single_column(file, 'sheet1', 'B2', 'B99')
@@ -59,7 +37,7 @@ for i in range(97):
     v.append(sun_fall[i])
     x.append(v)
 
-x = np.array(normalize(x))
+x = np.array(fc.normalize(x))
 y = np.array(start_date)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=True)
@@ -75,7 +53,7 @@ sum_of_result = 0
 print("Data\tPrediction\tReal\tDifference")
 for i in range(test_size):
     result = k1.neighbor(k, k1.distance(i))
-    print(i + 1, "th \t", itd(result), "    \t", itd(y_test[i]), sep='', end='')
+    print(i + 1, "th \t", fc.itd(result), "    \t", fc.itd(y_test[i]), sep='', end='')
     print(" \t", abs(result - y_test[i]), " day", sep='')
     sum_of_result += abs(result - y_test[i])
 print("="*35)

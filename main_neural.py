@@ -7,6 +7,7 @@ from tensorflow.keras import optimizers
 from input_data import *
 import numpy as np
 from sklearn.model_selection import train_test_split
+import func as fc
 
 keras.initializers.he_normal(seed=None)
 
@@ -58,7 +59,7 @@ model = Sequential()
 # TODO: batch_normalization
 model.add(Dense(32, kernel_initializer='he_normal'))
 model.add(BatchNormalization())
-model.add(Activation('relu'))
+model.add(Activation('softmax'))
 
 # TODO: hidden layer 추가?
 #model.add(Dense(units=15,activation='softmax'))
@@ -93,14 +94,7 @@ predictions = model.predict(x_test)
 
 predictions=np.argmax(predictions[:10],axis=1)
 
-def itd(num):
-    month = 10
-    if num > 31:
-        month += 1
-        num -= 31
-    return str(month)+"/"+str(num)
-
 print("Data\tPrediction\tReal\tDifference")
 for i in range(len(y_test)):
-    print(i + 1, "th \t", itd(predictions[i]), "    \t", itd(y_test[i]), sep='', end='')
+    print(i + 1, "th \t", fc.itd(predictions[i]), "    \t", fc.itd(y_test[i]), sep='', end='')
     print(" \t", abs(predictions[i] - y_test[i]), " day", sep='')
