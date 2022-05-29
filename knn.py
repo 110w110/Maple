@@ -25,7 +25,7 @@ class Knn:
 
     def neighbor(self, k, dis):
         indexarr = np.argsort(dis)
-        total = 0.0
+        total = 0
 
         for i in range(k):
             total += (k-i) * self.y_train[indexarr[i]]
