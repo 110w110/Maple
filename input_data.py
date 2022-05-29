@@ -63,7 +63,7 @@ def get_singleline_data(file, sheetname, firstcell, lastcell):
 
     while cell != lastcell:
         data.append(get_cell_data(file,sheetname,cell))
-        print(data[-1:])
+        # print(data[-1:])
         # if 65 <= ord(cell[1]) <= 90:
         #     cell = cell[0] + chr(ord(cell[1])+1) + cell[2:]
         # else:
@@ -77,7 +77,7 @@ def get_singleline_data(file, sheetname, firstcell, lastcell):
             cell = 'AA' + cell[1:]
         else:
             cell = chr(ord(cell[:1])+1) + cell[1:]
-        print(cell)
+        # print(cell)
     return data
 
 def get_single_column(file, sheetname, firstcell, lastcell):

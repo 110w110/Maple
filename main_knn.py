@@ -36,7 +36,7 @@ max_temper = get_single_column(file, 'sheet2', 'E14', 'E919')
 rain_weight = get_single_column(file, 'sheet3', 'B2', 'B99')
 sun_summer = get_singleline_data(file, 'sheet7', 'B6', 'CU6')
 sun_fall = get_singleline_data(file, 'sheet7', 'B7', 'CU7')
-print(len(sun_fall))
+# print(len(sun_fall))
 # rain_time = get_single_column(file, 'sheet3', 'C2', 'C35')
 for i in range(393, -1, -1):
     if 0 <= i % 12 < 5 or 10 <= i % 12:
@@ -57,20 +57,20 @@ for i in range(393, -1, -1):
 x = []
 for i in range(97):
     v = []
-    # for j in range(5):
-    #     v.append(min_temper[i*5+j])
-    # for j in range(5):
-    #     v.append(max_temper[i*5+j])
+    for j in range(5):
+        v.append(min_temper[i*5+j])
+    for j in range(5):
+        v.append(max_temper[i*5+j])
     v.append(rain_weight[i])
     v.append(forsythia_flowering[i])
     v.append(sun_summer[i])
     v.append(sun_fall[i])
     x.append(v)
 # print(*x,sep='\n')
-x = np.array(x)
+x = np.array(normalize(x))
 y = np.array(start_date)
-print(x)
-print(len(x))
+# print(x)
+# print(len(x))
 # x = x / x.max()
 # y = y / y.max()
 
