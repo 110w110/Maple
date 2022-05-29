@@ -11,6 +11,7 @@ import func as fc
 
 keras.initializers.he_normal(seed=None)
 
+#TODO: input/output data
 file = load_xls('./data/maple.xlsx')
 start_date = get_single_column(file, 'sheet1', 'B2', 'B99')
 forsythia_flowering = get_single_column(file, 'sheet6', 'D2', 'D99')
@@ -50,9 +51,8 @@ for i in range(97):
 x = np.array(x)
 y = np.array(start_date)
 
+# TODO:Neural network
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, shuffle=False, random_state=1004)
-# print('x_train : ', x_train)
-# print('y_train : ', y_train)
 
 model = Sequential()
 
@@ -61,21 +61,10 @@ model.add(Dense(32, kernel_initializer='he_normal'))
 model.add(BatchNormalization())
 model.add(Activation('softmax'))
 
-# TODO: hidden layer 추가?
-#model.add(Dense(units=15,activation='softmax'))
-
-#sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 sgd = optimizers.SGD(lr=0.01,decay=1e-7)
-#sgd = optimizers.SGD(lr=0.01)
-
-#  TODO: 일반 사용
-#model.compile(optimizer='adam',loss='mse',metrics=['accuracy'])
 
 # TODO: sgd 직접 설정
 model.compile(optimizer=sgd,loss='mse',metrics=['accuracy'])
-
-# model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-# model.compile(loss='mean_squared_error', optimizer='sgd')
 
 # TODO: validation split
 model.fit(x_train, y_train, validation_split=0.2, epochs=1000)
@@ -88,10 +77,6 @@ print('test_acc : ',test_acc)
 print()
 
 predictions = model.predict(x_test)
-
-# print('y_test = ',y_test[:10])
-# print('predictions = ', np.argmax(predictions[:10],axis=1))
-
 predictions=np.argmax(predictions[:10],axis=1)
 
 print("Data\tPrediction\tReal\tDifference")
